@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Prepizzas </title>
+    <title>Calculadora de Prepizzas</title>
     <link rel="manifest" href="./manifest.json">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <style>
@@ -66,13 +66,6 @@
             background-color: #2e8b57;
         }
 
-        .results-section {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: rgba(60, 179, 113, 0.3);
-            border-radius: 5px;
-        }
-
         .quantity-section {
             margin-bottom: 10px;
         }
@@ -93,9 +86,47 @@
             }
         }
 
-        .results-section p {
-            margin: 10px 0;
-            font-size: 18px;
+        /* Estilos actualizados para la sección de resultados */
+        .results-section {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-section h2 {
+            color: #ffeb3b;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .result-label {
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .result-value {
+            font-size: 20px;
+            color: #ffeb3b;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .result-value .parentheses {
+            color: #ffeb3b;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -122,9 +153,18 @@
 
         <section class="results-section" id="results-section">
             <h2>Resultados</h2>
-            <p id="cost-without-profit">Costo por unidad sin ganancia: $0,00</p>
-            <p id="cost-with-profit">Costo por unidad con ganancia: $0,00</p>
-            <p id="total-cost-with-profit">Costo total con ganancia para 0 pre-pizzas: $0,00</p>
+            <div class="result-item">
+                <span class="result-label">Costo por unidad sin ganancia:</span>
+                <span class="result-value" id="cost-without-profit">($0,00)</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Costo por unidad con ganancia:</span>
+                <span class="result-value" id="cost-with-profit">($0,00)</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Costo total con ganancia:</span>
+                <span class="result-value" id="total-cost-with-profit">($0,00 para 0 prepizzas)</span>
+            </div>
         </section>
     </div>
 
@@ -154,7 +194,7 @@
                 salsa: document.getElementById('salsa').value
             };
             localStorage.setItem('precios', JSON.stringify(precios));
-            alert('Precios guardados exitosamente.');
+            alert('Dato Guardado Exitosamente!');
         }
 
         function cargarPrecios() {
@@ -174,7 +214,7 @@
             document.getElementById('aceite').value = '';
             document.getElementById('sal').value = '';
             document.getElementById('salsa').value = '';
-            alert('Precios listos para modificar.');
+            alert('Dato Borrado\nIngrese Nuevamente los valores.');
         }
 
         function calcularCostos() {
@@ -186,8 +226,7 @@
             const cantidadPizzas = parseFormattedNumber(document.getElementById('cantidad-pizzas').value);
 
             if (isNaN(harinaPrecio) || isNaN(levaduraPrecio) || isNaN(aceitePrecio) || isNaN(salPrecio) || isNaN(salsaPrecio) || isNaN(cantidadPizzas)) {
-                document.getElementById('cost-without-profit').innerHTML = 
-                    "Por favor, ingresa la cantidad de pre-pizzas que deseas calcular.";
+                document.getElementById('cost-without-profit').innerHTML = "<span class='parentheses'>(</span>Por favor, ingresa todos los valores<span class='parentheses'>)</span>";
                 document.getElementById('cost-with-profit').innerHTML = "";
                 document.getElementById('total-cost-with-profit').innerHTML = "";
                 return;
@@ -227,9 +266,9 @@
             const costoConGanancia = costoTotalPorPrepizza * 3;
             const costoTotalConGanancia = costoConGanancia * cantidadPizzas;
 
-            document.getElementById('cost-without-profit').innerHTML = `Costo por Unidad sin ganancia: $${formatNumber(costoTotalPorPrepizza.toFixed(2))}`;
-            document.getElementById('cost-with-profit').innerHTML = `Costo por Unidad con ganancia: $${formatNumber(costoConGanancia.toFixed(2))}`;
-            document.getElementById('total-cost-with-profit').innerHTML = `Costo total con ganancia para ${formatNumber(cantidadPizzas)} prepizzas: $${formatNumber(costoTotalConGanancia.toFixed(2))}`;
+            document.getElementById('cost-without-profit').innerHTML = `<span class='parentheses'>(</span>$${formatNumber(costoTotalPorPrepizza.toFixed(2))}<span class='parentheses'>)</span>`;
+            document.getElementById('cost-with-profit').innerHTML = `<span class='parentheses'>(</span>$${formatNumber(costoConGanancia.toFixed(2))}<span class='parentheses'>)</span>`;
+            document.getElementById('total-cost-with-profit').innerHTML = `<span class='parentheses'>(</span>$${formatNumber(costoTotalConGanancia.toFixed(2))} para ${formatNumber(cantidadPizzas)} prepizzas<span class='parentheses'>)</span>`;
         }
 
         // Agregar evento de formateo a todos los campos de entrada
@@ -245,16 +284,17 @@
         document.getElementById('calculate-btn').addEventListener('click', calcularCostos);
 
         window.onload = cargarPrecios;
-    </script>   <script>
-     if ('serviceWorker' in navigator) {
-       navigator.serviceWorker.register('./sw.js')
-         .then(function(registration) {
-           console.log('Service Worker registrado con éxito:', registration.scope);
-         })
-         .catch(function(error) {
-           console.log('Registro de Service Worker fallido:', error);
-         });
-     }
-   </script>
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registrado con éxito:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Registro de Service Worker fallido:', error);
+                });
+        }
+    </script>
 </body>
 </html>
