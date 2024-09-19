@@ -227,8 +227,8 @@
             const costoConGanancia = costoTotalPorPrepizza * 3;
             const costoTotalConGanancia = costoConGanancia * cantidadPizzas;
 
-            document.getElementById('cost-without-profit').innerHTML = `Costo sin ganancia: $${formatNumber(costoTotalPorPrepizza.toFixed(2))}`;
-            document.getElementById('cost-with-profit').innerHTML = `Costo con ganancia: $${formatNumber(costoConGanancia.toFixed(2))}`;
+            document.getElementById('cost-without-profit').innerHTML = `Costo por Unidad sin ganancia: $${formatNumber(costoTotalPorPrepizza.toFixed(2))}`;
+            document.getElementById('cost-with-profit').innerHTML = `Costo por ukidadbb con ganancia: $${formatNumber(costoConGanancia.toFixed(2))}`;
             document.getElementById('total-cost-with-profit').innerHTML = `Costo total con ganancia para ${formatNumber(cantidadPizzas)} prepizzas: $${formatNumber(costoTotalConGanancia.toFixed(2))}`;
         }
 
