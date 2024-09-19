@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Prepizzas - Diseño Moderno</title>
+    <title>Calculadora de Prepizzas </title>
     <link rel="manifest" href="./manifest.json">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <style>
@@ -116,7 +116,7 @@
 
         <section class="quantity-section">
             <h2>Ingresa la Cantidad de Prepizzas</h2>
-            <input type="text" id="cantidad-pizzas" placeholder="Número de prepizzas" />
+            <input type="text" id="cantidad-pizzas" placeholder="Número de pre-pizzas" />
             <button id="calculate-btn">Calcular</button>
         </section>
 
@@ -124,7 +124,7 @@
             <h2>Resultados</h2>
             <p id="cost-without-profit">Costo sin ganancia: $0,00</p>
             <p id="cost-with-profit">Costo con ganancia: $0,00</p>
-            <p id="total-cost-with-profit">Costo total con ganancia para 0 prepizzas: $0,00</p>
+            <p id="total-cost-with-profit">Costo total con ganancia para 0 pre-pizzas: $0,00</p>
         </section>
     </div>
 
@@ -187,7 +187,7 @@
 
             if (isNaN(harinaPrecio) || isNaN(levaduraPrecio) || isNaN(aceitePrecio) || isNaN(salPrecio) || isNaN(salsaPrecio) || isNaN(cantidadPizzas)) {
                 document.getElementById('cost-without-profit').innerHTML = 
-                    "Por favor, ingresa la cantidad de pre-pizzas que deseas.";
+                    "Por favor, ingresa la cantidad de pre-pizzas que deseas calcular.";
                 document.getElementById('cost-with-profit').innerHTML = "";
                 document.getElementById('total-cost-with-profit').innerHTML = "";
                 return;
