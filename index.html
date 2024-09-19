@@ -123,7 +123,7 @@
         <section class="results-section" id="results-section">
             <h2>Resultados</h2>
             <p id="cost-without-profit">Costo sin ganancia: $0,00</p>
-            <p id="cost-with-profit">Costo con ganancia (x3): $0,00</p>
+            <p id="cost-with-profit">Costo con ganancia: $0,00</p>
             <p id="total-cost-with-profit">Costo total con ganancia para 0 prepizzas: $0,00</p>
         </section>
     </div>
@@ -186,7 +186,8 @@
             const cantidadPizzas = parseFormattedNumber(document.getElementById('cantidad-pizzas').value);
 
             if (isNaN(harinaPrecio) || isNaN(levaduraPrecio) || isNaN(aceitePrecio) || isNaN(salPrecio) || isNaN(salsaPrecio) || isNaN(cantidadPizzas)) {
-                document.getElementById('cost-without-profit').innerHTML = "Por favor, Ingresa la cantidad de pre-pizzas";
+                document.getElementById('cost-without-profit').innerHTML = 
+                    "Por favor, ingresa la cantidad de pre-pizzas que deseas.";
                 document.getElementById('cost-with-profit').innerHTML = "";
                 document.getElementById('total-cost-with-profit').innerHTML = "";
                 return;
