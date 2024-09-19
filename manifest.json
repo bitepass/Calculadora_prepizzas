@@ -1,6 +1,6 @@
 {
   "name": "Calculadora de Prepizzas",
-  "short_name": "Prepizzas",
+  "short_name": "Calculadora de Pre-pizzas",
   "description": "Calculadora para costos de prepizzas",
   "start_url": "/Calculadora_prepizzas/",
   "display": "standalone",
