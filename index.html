@@ -226,7 +226,7 @@
             const cantidadPizzas = parseFormattedNumber(document.getElementById('cantidad-pizzas').value);
 
             if (isNaN(harinaPrecio) || isNaN(levaduraPrecio) || isNaN(aceitePrecio) || isNaN(salPrecio) || isNaN(salsaPrecio) || isNaN(cantidadPizzas)) {
-                document.getElementById('cost-without-profit').innerHTML = "<span class='parentheses'>(</span>Por favor, ingresa todos los valores<span class='parentheses'>)</span>";
+                document.getElementById('cost-without-profit').innerHTML = "<span class='parentheses'>(</span>Por favor, ingresa la cantidad en el casillero de arriba!!<span class='parentheses'>)</span>";
                 document.getElementById('cost-with-profit').innerHTML = "";
                 document.getElementById('total-cost-with-profit').innerHTML = "";
                 return;
