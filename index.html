@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Prepizzas - Diseño Moderno</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #2e8b57, #3cb371);
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(46, 139, 87, 0.8);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(60, 179, 113, 0.5);
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        button {
+            border-radius: 5px;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            background-color: #3cb371;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2e8b57;
+        }
+
+        .results-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(60, 179, 113, 0.3);
+            border-radius: 5px;
+        }
+
+        .quantity-section {
+            margin-bottom: 10px;
+        }
+
+        .quantity-section input {
+            width: 60%;
+            margin-right: 2%;
+        }
+
+        .quantity-section button {
+            width: 38%;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+
+        .results-section p {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Prepizzas</h1>
+        <section class="prices-section">
+            <h2>Ingresa los Precios</h2>
+            <input type="text" id="harina" placeholder="Harina 0000 (25 kilos)" />
+            <input type="text" id="levadura" placeholder="Levadura (500g)" />
+            <input type="text" id="aceite" placeholder="Aceite (9 litros)" />
+            <input type="text" id="sal" placeholder="Sal (1 kilo)" />
+            <input type="text" id="salsa" placeholder="Salsa (8 kilos)" />
+        </section>
+
+        <button id="save-btn">Guardar Precios</button>
+        <button id="modify-btn">Modificar Precios</button>
+
+        <section class="quantity-section">
+            <h2>Ingresa la Cantidad de Prepizzas</h2>
+            <input type="text" id="cantidad-pizzas" placeholder="Número de prepizzas" />
+            <button id="calculate-btn">Calcular</button>
+        </section>
+
+        <section class="results-section" id="results-section">
+            <h2>Resultados</h2>
+            <p id="cost-without-profit">Costo sin ganancia: $0,00</p>
+            <p id="cost-with-profit">Costo con ganancia (x3): $0,00</p>
+            <p id="total-cost-with-profit">Costo total con ganancia para 0 prepizzas: $0,00</p>
+        </section>
+    </div>
+
+    <script>
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function parseFormattedNumber(str) {
+            return parseFloat(str.replace(/\./g, '').replace(',', '.'));
+        }
+
+        function formatInputValue(input) {
+            let value = input.value.replace(/\./g, '');
+            if (value !== '') {
+                value = formatNumber(parseInt(value, 10));
+            }
+            input.value = value;
+        }
+
+        function guardarPrecios() {
+            const precios = {
+                harina: document.getElementById('harina').value,
+                levadura: document.getElementById('levadura').value,
+                aceite: document.getElementById('aceite').value,
+                sal: document.getElementById('sal').value,
+                salsa: document.getElementById('salsa').value
+            };
+            localStorage.setItem('precios', JSON.stringify(precios));
+            alert('Precios guardados exitosamente.');
+        }
+
+        function cargarPrecios() {
+            const preciosGuardados = JSON.parse(localStorage.getItem('precios'));
+            if (preciosGuardados) {
+                document.getElementById('harina').value = preciosGuardados.harina;
+                document.getElementById('levadura').value = preciosGuardados.levadura;
+                document.getElementById('aceite').value = preciosGuardados.aceite;
+                document.getElementById('sal').value = preciosGuardados.sal;
+                document.getElementById('salsa').value = preciosGuardados.salsa;
+            }
+        }
+
+        function modificarPrecios() {
+            document.getElementById('harina').value = '';
+            document.getElementById('levadura').value = '';
+            document.getElementById('aceite').value = '';
+            document.getElementById('sal').value = '';
+            document.getElementById('salsa').value = '';
+            alert('Precios listos para modificar.');
+        }
+
+        function calcularCostos() {
+            const harinaPrecio = parseFormattedNumber(document.getElementById('harina').value);
+            const levaduraPrecio = parseFormattedNumber(document.getElementById('levadura').value);
+            const aceitePrecio = parseFormattedNumber(document.getElementById('aceite').value);
+            const salPrecio = parseFormattedNumber(document.getElementById('sal').value);
+            const salsaPrecio = parseFormattedNumber(document.getElementById('salsa').value);
+            const cantidadPizzas = parseFormattedNumber(document.getElementById('cantidad-pizzas').value);
+
+            if (isNaN(harinaPrecio) || isNaN(levaduraPrecio) || isNaN(aceitePrecio) || isNaN(salPrecio) || isNaN(salsaPrecio) || isNaN(cantidadPizzas)) {
+                document.getElementById('cost-without-profit').innerHTML = "Por favor, completa todos los campos con valores numéricos válidos.";
+                document.getElementById('cost-with-profit').innerHTML = "";
+                document.getElementById('total-cost-with-profit').innerHTML = "";
+                return;
+            }
+
+            // Proporciones
+            const harinaPorPrepizza = 250; // gramos
+            const levaduraPorPrepizza = 5; // gramos
+            const aceitePorPrepizza = 90; // cc
+            const salPorPrepizza = 10; // gramos
+            const salsaPorPrepizza = 8; // gramos
+
+            // Cantidades totales para 100 prepizzas
+            const cantidadHarina = 25 * 1000; // gramos
+            const cantidadLevadura = 500; // gramos
+            const cantidadAceite = 9 * 1000; // cc
+            const cantidadSal = 1 * 1000; // gramos
+            const cantidadSalsa = 8 * 1000; // gramos
+
+            // Costos por unidad (gramo o cc)
+            const costoPorGramoHarina = harinaPrecio / cantidadHarina;
+            const costoPorGramoLevadura = levaduraPrecio / cantidadLevadura;
+            const costoPorCcAceite = aceitePrecio / cantidadAceite;
+            const costoPorGramoSal = salPrecio / cantidadSal;
+            const costoPorGramoSalsa = salsaPrecio / cantidadSalsa;
+
+            // Costo por prepizza
+            const costoHarinaPorPrepizza = costoPorGramoHarina * harinaPorPrepizza;
+            const costoLevaduraPorPrepizza = costoPorGramoLevadura * levaduraPorPrepizza;
+            const costoAceitePorPrepizza = costoPorCcAceite * aceitePorPrepizza;
+            const costoSalPorPrepizza = costoPorGramoSal * salPorPrepizza;
+            const costoSalsaPorPrepizza = costoPorGramoSalsa * salsaPorPrepizza;
+
+            const costoTotalPorPrepizza = costoHarinaPorPrepizza + costoLevaduraPorPrepizza + costoAceitePorPrepizza + costoSalPorPrepizza + costoSalsaPorPrepizza;
+
+            // Cálculo con ganancia
+            const costoConGanancia = costoTotalPorPrepizza * 3;
+            const costoTotalConGanancia = costoConGanancia * cantidadPizzas;
+
+            document.getElementById('cost-without-profit').innerHTML = `Costo sin ganancia: $${formatNumber(costoTotalPorPrepizza.toFixed(2))}`;
+            document.getElementById('cost-with-profit').innerHTML = `Costo con ganancia: $${formatNumber(costoConGanancia.toFixed(2))}`;
+            document.getElementById('total-cost-with-profit').innerHTML = `Costo total con ganancia para ${formatNumber(cantidadPizzas)} prepizzas: $${formatNumber(costoTotalConGanancia.toFixed(2))}`;
+        }
+
+        // Agregar evento de formateo a todos los campos de entrada
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                formatInputValue(this);
+            });
+        });
+
+        document.getElementById('save-btn').addEventListener('click', guardarPrecios);
+        document.getElementById('modify-btn').addEventListener('click', modificarPrecios);
+        document.getElementById('calculate-btn').addEventListener('click', calcularCostos);
+
+        window.onload = cargarPrecios;
+    </script>
+</body>
+</html>

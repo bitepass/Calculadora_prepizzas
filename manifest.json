@@ -1,0 +1,21 @@
+{
+  "name": "Calculadora de Prepizzas",
+  "short_name": "Prepizzas",
+  "description": "Calculadora para costos de prepizzas",
+  "start_url": "/Calculadora_prepizzas/",
+  "display": "standalone",
+  "background_color": "#2e8b57",
+  "theme_color": "#3cb371",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
